@@ -10,7 +10,7 @@ use Discord\WebSockets\Event;
 
 
     $bot = new Discord([
-    'token' => 'ODM4NDQ2NTY0MjU5MDA0NDU2.YI7ONg.QVoaaNVU9cqXLc4JBwIszP5BHMQ',
+    'token' => '#####',
     ]);
 
     $bot->on('ready', function ($discord){
