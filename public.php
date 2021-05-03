@@ -10,22 +10,31 @@ use Discord\WebSockets\Event;
 
 
 $bot = new Discord([
-    'token' => 'urToken',
+    'token' => '######',
 ]);
 
 $bot->on('ready', function ($discord){
     echo "Bot Started.", PHP_EOL;
 
     $discord->on(Event::MESSAGE_CREATE, function ($message){
-        if($message->content == "!stats"){
-            echo "{$message->author->username} ran {$message->content}";
-            $response = file_get_contents("https://apiv2.nethergames.org/players/thebarii/stats");
-            $info = json_decode($response);
-            $message->reply("Your current wins: " .$info->wins);
+        $param = explode(' ', $message->content);
+        if($param[0] == "!stats"){
+
+            if(!is_null($param[1])) {
+                echo "{$message->author->username} ran {$message->content}";
+                $response = file_get_contents("https://apiv2.nethergames.org/players/".$param[1]."/stats");
+                $info = json_decode($response);
+                if(is_object($info)){
+                    $message->reply($param[1]."'s wins: " . $info->wins);
+                }else{
+                    $message->reply("Something went wrong.\nPlease check the IGN for typos.");
+                }
+            }else{
+                $message->reply("Please input an username.");
+            }
+
         }
     });
-
-
 });
 
 
