@@ -10,7 +10,7 @@ use Discord\WebSockets\Event;
 
 
     $bot = new Discord([
-    'token' => '#####',
+    'token' => 'ODM4NDQ2NTY0MjU5MDA0NDU2.YI7ONg.l8Xx4_W3IGcAoHz3av392uI9UzU',
     ]);
 
     $bot->on('ready', function ($discord){
@@ -18,7 +18,8 @@ use Discord\WebSockets\Event;
 
     $discord->on(Event::MESSAGE_CREATE, function ($message, $discord){
         if($message->content == "ok"){
-            echo "no";
+            echo "{$message->author->username} ran {$message->content}";
+            $message->channel->sendMessage("no");
         }
       });
     });
