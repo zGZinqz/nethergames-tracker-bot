@@ -9,23 +9,27 @@ use Discord\WebSockets\Intents;
 use Discord\WebSockets\Event;
 
 
-    $bot = new Discord([
-    'token' => '#####',
-    ]);
+$bot = new Discord([
+    'token' => 'urToken',
+]);
 
-    $bot->on('ready', function ($discord){
+$bot->on('ready', function ($discord){
     echo "Bot Started.", PHP_EOL;
 
-    $discord->on(Event::MESSAGE_CREATE, function ($message, $discord){
-        if($message->content == "ok"){
+    $discord->on(Event::MESSAGE_CREATE, function ($message){
+        if($message->content == "!stats"){
             echo "{$message->author->username} ran {$message->content}";
-            $message->channel->sendMessage("no");
+            $response = file_get_contents("https://apiv2.nethergames.org/players/thebarii/stats");
+            $info = json_decode($response);
+            $message->reply("Your current wins: " .$info->wins);
         }
-      });
     });
 
 
-    $bot->run();
+});
+
+
+$bot->run();
 
 
 
