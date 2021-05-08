@@ -143,7 +143,7 @@ $bot->on('ready', function ($discord){
             $message->reply("We can only track these statistics at the moment. Capitalizations must be used.\n\n**LIST:**\nbwKills\nbwDeaths\nbwWins\nwins\nkills\ndeaths");
         }elseif($param[0] == "ng!source"){
             $message->reply("My source code can be found at https://github.com/BariPlayzYT/nethergames-tracker-bot on github written in PHP by Bari!");
-        }elseif($param[0] == "ng!tracker help"){
+        }elseif($message->content == "ng!tracker help"){
             $message->reply("**COMMANDS:**\nng!tracker help (this command)\nng!track [What To Track, use ng!tracklist to see what you can track.] [IGN] [Time to track for (in seconds)]\nng!source (get the source code)");
         }
     });
