@@ -11,7 +11,7 @@ use Discord\Parts\Embed\Embed;
 
 
 $bot = new Discord([
-    'token' => '####',
+    'token' => '###',
     'loadAllMembers' => true,
     'intents' => Intents::getDefaultIntents() | Intents::GUILD_MEMBERS,
 ]);
@@ -71,14 +71,10 @@ $bot->on('ready', function ($discord){
 
                                             $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
                                             $newinfo = json_decode($newresponse);
-                                            if ($newinfo->kills < $info->kills) {
-                                                $finalRes = $newinfo->$param[3] - $info->$param[3];
-                                                $id = $message->author->id;
-                                                $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal Results of Tracked Stats\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.");
-                                            } else {
-                                                $id = $message->author->id;
-                                                $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nYou didn't gain any stats. (This could be because of NG Caching System, use a higher length of time.) \n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.");
-                                            }
+
+                                            $finalRes = $newinfo->$param[3] - $info->$param[3];
+                                            $id = $message->author->id;
+                                            $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal Results of Tracked Stats\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.");
                                         });
                                     }else{
                                         $message->reply("The seconds counter cannot be less than 300 seconds (5 Minutes) because of nethergame's caching system. Please put a value higher than 300 seconds.");
