@@ -57,7 +57,7 @@ $bot->on('ready', function ($discord){
                             $info = json_decode($response);
                             if (is_object($info)) {
                                 if(is_numeric($param[3])) {
-                                    if($param[3] < "300") {
+                                    if($param[3] > "300") {
                                         $embed = new Embed($discord);
                                         $embed->setTitle("Success");
                                         $embed->setDescription("Now tracking your " . $param[1] . " stats on the IGN " . $param[2] . " for " . $param[3] . " seconds.\nMake your DMs are on so we can send your tracked stats in the time given!");
@@ -71,7 +71,7 @@ $bot->on('ready', function ($discord){
 
                                             $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
                                             $newinfo = json_decode($newresponse);
-                                            if ($newinfo->kills > $info->kills) {
+                                            if ($newinfo->kills < $info->kills) {
                                                 $finalRes = $newinfo->$param[3] - $info->$param[3];
                                                 $id = $message->author->id;
                                                 $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal Results of Tracked Stats\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.");
