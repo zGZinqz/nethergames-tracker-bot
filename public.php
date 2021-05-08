@@ -60,7 +60,7 @@ $bot->on('ready', function ($discord){
                                     if($param[3] > "300") {
                                         $embed = new Embed($discord);
                                         $embed->setTitle("Success");
-                                        $embed->setDescription("Now tracking your " . $param[1] . " stats on the IGN " . $param[2] . " for " . $param[3] . " seconds.\nMake your DMs are on so we can send your tracked stats in the time given!");
+                                        $embed->setDescription("Now tracking your " . $param[1] . " stats on the IGN " . $param[2] . " for " . $param[3] . " seconds.\nMake sure your DMs are on so we can send your tracked stats in the time given!");
                                         $embed->setColor("#16FF00");
                                         $embed->setFooter($message->author->username . ", Bot made by Bari", $av = $message->user->avatar);
                                         $embed->setTimestamp();
