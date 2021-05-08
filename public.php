@@ -52,7 +52,7 @@ $bot->on('ready', function ($discord){
             if (array_key_exists(1, $param)) {
                 if (array_key_exists(2, $param)) {
                     if (array_key_exists(3, $param)) {
-                        if ($param[1] == "kills" or $param[1] == "bwWins") {
+                        if ($param[1] == "kills" or $param[1] == "bwWins" or $param[1] == "bwKills" or $param[1] == "wins" or $param[1] == "bwDeaths" or $param[1] == "deaths") {
                             $response = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
                             $info = json_decode($response);
                             if (is_object($info)) {
@@ -140,7 +140,7 @@ $bot->on('ready', function ($discord){
                 $message->channel->sendMessage("<@" . $message->user->id . ">", false, $embed);
             }
         }elseif($param[0] == "ng!tracklist"){
-            $message->reply("We can only track these statistics at the moment. Capitalizations must be used.\n\n**LIST:**\nbwKills\nbwDeaths\nwins\nkils");
+            $message->reply("We can only track these statistics at the moment. Capitalizations must be used.\n\n**LIST:**\nbwKills\nbwDeaths\nbwWins\nwins\nkills\ndeaths");
         }elseif($param[0] == "ng!source"){
             $message->reply("My source code can be found at https://github.com/BariPlayzYT/nethergames-tracker-bot on github written in PHP by Bari!");
         }elseif($param[0] == "ng!tracker help"){
