@@ -70,7 +70,7 @@ $bot->on('ready', function ($discord){
                                         $message->channel->sendMessage("<@" . $message->user->id . ">", false, $embed);
                                         var_dump($info, $response);
 
-                                        if($param[1] == "kills" or $param[1] == "wins" or $param[1] == "deaths") {
+                                        if($param[1] == "kills" or $param[1] == "wins" or $param[1] == "deaths" or $param[1] == "level" or $param[1] == "xp" or $param[1] == "statusCredits") {
                                             $discord->getLoop()->addTimer($param[3], function () use ($message, $param, $info, $discord) {
                                                 $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
                                                 $newinfo = json_decode($newresponse);
@@ -79,7 +79,7 @@ $bot->on('ready', function ($discord){
                                                 $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal results of tracked stats:\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.\nOld Stats: " . $info->{$param[1]} . "\nNew stats: " . $newinfo->{$param[1]});
                                             });
 
-                                        }elseif($param[1] == "bwWins" or $param[1] == "bwKills" or $param[1] == "bwDeaths") {
+                                        }elseif($param[1] == "bwWins" or $param[1] == "bwKills" or $param[1] == "bwDeaths" or $param[1] == "tbWins" or $param[1] == "tbKills" or $param[1] == "tbDeaths" or $param[1] == "swWins" or $param[1] == "swDeaths" or $param[1] == "swKills") {
                                             $discord->getLoop()->addTimer($param[3], function () use ($message, $param, $info, $discord) {
                                                 $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
                                                 $newinfo = json_decode($newresponse);
@@ -148,7 +148,7 @@ $bot->on('ready', function ($discord){
                 $message->channel->sendMessage("<@" . $message->user->id . ">", false, $embed);
             }
         } else if ($param[0] == "ng!tracklist") { // tracklist command
-            $message->reply("We can only track these statistics at the moment. These are **CaSe sensitive**.\n```bwKills\nbwDeaths\nbwWins\nwins\nkills\ndeaths```");
+            $message->reply("We can only track these statistics at the moment. These are **CaSe sensitive**.\n```bwKills\nbwDeaths\nbwWins\nwins\nkills\nswWins\nswKills\nswDeaths\ntbWins\ntbKills\ntbDeaths\nlevels\nxp\nstatusCredits```");
         } else if ($param[0] == "ng!source") { // source command
             $message->reply("The source code can be found at:\nhttps://github.com/BariPlayzYT/nethergames-tracker-bot");
         } else if ($message->content == "ng!tracker help") { // help command
