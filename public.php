@@ -70,15 +70,25 @@ $bot->on('ready', function ($discord){
                                         $message->channel->sendMessage("<@" . $message->user->id . ">", false, $embed);
                                         var_dump($info, $response);
 
+                                        if($param[1] == "kills" or $param[1] == "wins" or $param[1] == "deaths") {
+                                            $discord->getLoop()->addTimer($param[3], function () use ($message, $param, $info, $discord) {
+                                                $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
+                                                $newinfo = json_decode($newresponse);
+                                                $finalRes = $newinfo->{$param[1]} - $info->{$param[1]};
+                                                $id = $message->author->id;
+                                                $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal results of tracked stats:\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.\nOld Stats: " . $info->{$param[1]} . "\nNew stats: " . $newinfo->{$param[1]});
+                                            });
 
-                                        $GLOBALS['timer-' . $message->user->id] = $discord->getLoop()->addPeriodicTimer($param[3], function () use ($message, $param, $info, $discord) {
-                                            $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
-                                            $newinfo = json_decode($newresponse);
-                                            $finalRes = $newinfo->{$param[1]} - $info->{$param[1]};
-                                            $id = $message->author->id;
-                                            $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal results of tracked stats:\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.\nOld Stats: " . $info->{$param[1]} . "\nNew stats: " . $newinfo->{$param[1]});
-                                            $discord->getLoop()->cancelTimer($GLOBALS['timer-' . $message->user->id]);
-                                        });
+                                        }elseif($param[1] == "bwWins" or $param[1] == "bwKills" or $param[1] == "bwDeaths") {
+                                            $discord->getLoop()->addTimer($param[3], function () use ($message, $param, $info, $discord) {
+                                                $newresponse = file_get_contents("https://apiv2.nethergames.org/players/" . $param[2] . "/stats");
+                                                $newinfo = json_decode($newresponse);
+                                                $finalRes = $newinfo->extra->{$param[1]} - $info->extra->{$param[1]};
+                                                $id = $message->author->id;
+                                                $message->user->sendMessage("<@$id> We successfully tracked your stats!\n\n**INFO:**\nFinal results of tracked stats:\nGained " . $param[1] . ": " . $finalRes . "\n\n**Other Info:**\nIGN: " . $param[2] . "\nTime tracked for: " . $param[3] . " seconds.\nOld Stats: " . $info->extra->{$param[1]} . "\nNew stats: " . $newinfo->extra->{$param[1]});
+                                            });
+                                        }
+
                                     } else { // User sends time less than 300 seconds
                                         $message->reply("The seconds counter cannot be less than 300 seconds (5 minutes) because of NetherGames' caching system. Please put a time higher than 300.");
                                     }
