@@ -3,3 +3,4 @@
 *.iml
 private.php
 *.zip
+.idea/.name
